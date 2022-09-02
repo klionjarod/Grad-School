@@ -1,0 +1,200 @@
+%This is my super simple Real Analysis Homework template
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+\usepackage[]{amssymb} %gives us the character \varnothing
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{linalgjh}
+
+
+\title{Homework 1}
+\author{Jarod Klion}
+\date{September 10, 2021}
+%This information doesn't actually show up on your document unless you use the maketitle command below
+
+\usepackage{fullpage}
+
+\begin{document}
+\maketitle %This command prints the title based on information entered above
+
+%Section and subsection automatically number unless you put the asterisk next to them.
+%Basically, you type whatever text you want and use the $ sign to enter "math mode".
+%For fancy calligraphy letters, use \mathbb{}
+%Special characters are their own commands
+
+\subsection*{Problem 1(2.1)}
+Consider $a * b := ab + a + b$, \quad where $a,b \in \mathbb{R}\backslash\{-1\}$
+\begin{enumerate}[label=(\alph*)]
+	\item To show that $(\mathbb{R}\backslash\{-1\},*)$ is an Abelian group, we must prove it satisfies five properties:
+		\begin{itemize}
+			\item \textbf{Closure:} Check if $a * b = -1$ ever to ensure it's always in the group \\
+			$ a * b = ab + a + b = -1 $ \\
+			$ a(b+1) + b + 1 = 0$ \\
+			$ (a+1)(b+1) = 0$, so either a or b = -1, which is impossible since they are an element of the reals except -1
+			\item \textbf{Associative:}$ (a * b) * c = (a * b)c + (a * b) + c $ \\
+							$\rightarrow (ab + a + b)c + ab + a + b + c = abc + ac + bc + ab + a + b + c$ \\
+							$\rightarrow a(bc + b + c) + bc + a + b + c = (bc + b + c)a + a + (bc + b + c)$ \\
+							$\rightarrow (b*c)a + (b*c) + a = a * (b * c)$
+			\item \textbf{Neutral (Identity) Element:} We will find the identity element, $I$, such that $ a * I = a $ \\
+									$\rightarrow aI + a + I = a = I(a + 1) = 0$, so I = 0, since $a \ne -1$  
+			\item \textbf{Inverse Element:} We will find the inverse, $a^{-1}$, of an element such that $a * a^{-1} = 0$ \\
+							         $\rightarrow a * a^{-1} = aa^{-1} + a + a^{-1} = 0$ \\
+							         $\rightarrow a^{-1}(a +1) + a = 0$ \\
+							         $\rightarrow a^{-1} = -\frac{a}{a+1}$
+			\item \textbf{Commutative:} To be an Abelian group specifically, this property must hold true. \\
+					$ a * b = ab + a + b $ \\
+					$ b * a = ba + b + a $ \\
+					$\therefore$ From the associative property, we can conclude that $ a*b = b*a$ 
+		\end{itemize}		 
+	\item $3 * x * x = 15$ \\
+	         $3 * (x * x) = 3 * (x^2 + 2x) = 3(x^2+2x) + 3 + x^2 + 2x$ \\
+	         $3x^2 + 6x + 3 + x^2 + 2x = 4x^2 + 8x + 3$ \\
+	         $4x^2 + 8x +3 = 15 \rightarrow x^2 + 2x - 3 =  $ \\
+	         $(x+3)(x-1) = 0$ \\
+	         $ x=1,-3$
+\end{enumerate}
+\clearpage %Gives us a page break before the next section. Optional.
+
+\subsection*{Problem 2 (2.4)}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\begin{bmatrix} 1 & 2 \\ 4 & 5 \\	7 & 8 \end{bmatrix}$ $\begin{bmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 1 \end{bmatrix}$, [3,2]x[3,3] NOT POSSIBLE
+		\item $\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix}$ $\begin{bmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 1 \end{bmatrix}$ 
+					= $\begin{bmatrix} 1 + 3 & 1 + 2 & 2 + 3 \\ 4 + 6 &  4 + 5 & 5 + 6 \\ 7 + 9 & 7 + 8 & 8 + 9 \end{bmatrix}$
+					= $\begin{bmatrix} 4 & 3 & 5 \\ 10 & 9 & 11 \\ 16 & 15 & 17 \end{bmatrix}$
+		\item $\begin{bmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 1 \end{bmatrix}$ $\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{bmatrix}$
+					= $\begin{bmatrix} 1 + 4 & 2 + 5 & 3 + 6 \\ 4 + 7 & 5 + 8 & 6 + 9 \\ 1 + 7 & 2 + 8 & 3 + 9 \end{bmatrix}$ 
+					= $\begin{bmatrix} 5 & 7 & 9 \\ 11 & 13 & 15 \\ 8 & 10 & 12 \end{bmatrix}$
+		\item $\begin{bmatrix} 1 & 2 & 1 & 2 \\ 4 & 1 & -1 & -4 \end{bmatrix}$ $\begin{bmatrix} 0 & 3 \\ 1 & -1 \\ 2 & 1 \\ 5 & 2 \end{bmatrix}$
+					= $\begin{bmatrix} 0 + 2 + 2 + 10 & 3 - 2 + 1 + 4 \\ 0 + 1 - 2 - 20 & 12 - 1 -1 - 8 \end{bmatrix}$ 
+					= $\begin{bmatrix} 14 & 6 \\ -21 & 2 \end{bmatrix}$ 
+		\item $\begin{bmatrix} 0 & 3 \\ 1 & -1 \\ 2 & 1 \\ 5 & 2 \end{bmatrix}$ $\begin{bmatrix} 1 & 2 & 1 & 2 \\ 4 & 1 & -1 & -4 \end{bmatrix}$
+			= $\begin{bmatrix} 0 + 12 & 0 + 3 & 0 - 3 & 0 - 12 \\ 1 - 4 & 2 - 1 & 1 + 1 & 2 + 4 \\ 2 + 4 & 4 + 1 & 2 - 1 & 4 - 4 \\ 5 + 8 & 10 + 2 & 5 - 2 & 10 - 8 \end{bmatrix}$
+			= $\begin{bmatrix} 12 & 3 & -3 & -12 \\ -3 & 1 & 2 & 6 \\ 6 & 5 & 1 & 0 \\ 13 & 12 & 3 & 2 \end{bmatrix}$
+	\end{enumerate}
+\clearpage
+
+\subsection*{Problem 3 (2.5)}
+	\begin{enumerate}[label=(\alph*)]
+		\item \textbf{A} = $\begin{bmatrix} 1 & 1 & -1 & -1 \\ 2 & 5 & -7 & -5 \\ 2 & -1 & 1 & 3 \\ 5 & 2 & -4 & 2 \end{bmatrix}$, $\vec{b} = \begin{bmatrix} 1 \\ -2 \\ 4 \\ 6 								\end{bmatrix}$ \\
+		$
+		\longrightarrow \begin{amatrix}{4} 1 & 1 & -1 & -1 & 1 \\ 2 & 5 & -7 & -5 & -2 \\ 2 & -1 & 1 & 3 & 4 \\ 5 & 2 & -4 & 2 & 6 \end{amatrix}  
+		\grstep[R_4 - 5 R_1]{R_2 - 2 R_1, R_3 - 2 R_1} 
+		\begin{amatrix}{4} 1 & 1 & -1 & -1 & 1 \\ 0 & 3 & -5 & -3 & -4 \\ 0 & -3 & 3 & 5 & 2 \\ 0 & -3 & 1 & 7 & 1 \end{amatrix}\\
+		\grstep{\frac{1}{3}R_2}
+		\begin{amatrix}{4} 1 & 1 & -1 & -1 & 1 \\ 0 & 1 & -\frac{5}{3} & -1 & -\frac{4}{3} \\ 0 & -3 & 3 & 5 & 2 \\ 0 & -3 & 1 & 7 & 1 \end{amatrix}
+		\grstep[R_4 + 3R_2]{R_1 - R_2, R_3 + 3R_2}
+		\begin{amatrix}{4} 1 & 0 & \frac{2}{3} & 0 & \frac{7}{3} \\ 0 & 1 & -\frac{5}{3} & -1 & -\frac{4}{3} \\ 0 & 0 & -2 & 2 & 2 \\ 0 & 0 & -4 & 4 & -3 \end{amatrix} \\
+		\grstep{-\frac{1}{2}R_3}
+		\begin{amatrix}{4} 1 & 0 & \frac{2}{3} & 0 & \frac{7}{3} \\ 0 & 1 & -\frac{5}{3} & -1 & -\frac{4}{3} \\ 0 & 0 & 1 & -1 & -1 \\ 0 & 0 & -4 & 4 & -3 \end{amatrix}
+		\grstep[R_4 + 4R_3]{R_1 - \frac{2}{3}R_3, R_2 + \frac{5}{3}R_3}
+		\begin{amatrix}{4} 1 & 0 & 0 & \frac{2}{3} & \frac{5}{3} \\ 0 & 1 & 0 & -\frac{8}{3} & \frac{1}{3} \\ 0 & 0 & 1 & -1 & -1 \\ 0 & 0 & 0 & 0 & 1 \end{amatrix}\\
+		$
+		\begin{center} The system is inconsistent since 0 $\ne$ 1 \end{center}
+		\item \textbf{A} = $\begin{bmatrix} 1 & -1 & 0 & 0 & 1\\ 1 & 1 & 0 & -3 & 0 \\ 2&-1&0&1&-1\\-1&2&0&-2&-1\end{bmatrix}$, $\vec{b} = \begin{bmatrix} 3\\6\\5\\-1 								\end{bmatrix}$\\
+		$
+		\longrightarrow \begin{amatrix}{5} 1 & -1 & 0 & 0 & 1 & 3 \\ 1 & 1 & 0 & -3 & 0 & 6\\ 2 & -1 & 0 & 1 & -1 & 5\\ -1 & 2 & 0 & -2 & -1 & -1 \end{amatrix}
+		\grstep[R_4 + R_1]{R_2 - R_1, R_3 - 2R_1}
+		\begin{amatrix}{5} 1 & -1 & 0 & 0 & 1 & 3 \\ 0 & 2 & 0 & -3 & -1 & 3\\ 0 & 1 & 0 & 1 & -3 & -1\\ 0 & 1 & 0 & -2 & 0 & 2 \end{amatrix} \\
+		\grstep{\frac{1}{2}R_2}
+		\begin{amatrix}{5} 1 & -1 & 0 & 0 & 1 & 3 \\ 0 & 1 & 0 & -3/2 & -1/2 & 3/2 \\ 0 & 1 & 0 & 1 & -3 & -1\\ 0 & 1 & 0 & -2 & 0 & 2 \end{amatrix}
+		\grstep[R_4 - R_2]{R_1 + R_2, R_3 - R_2}
+		\begin{amatrix}{5} 1 & 0 & 0 & -3/2 & 1/2 & 9/2 \\ 0 & 1 & 0 & -3/2 & -1/2 & 3/2 \\ 0 & 0 & 0 & 5/2 & -5/2 & -5/2 \\ 0 & 0 & 0 & -1/2 & 1/2 & 1/2 \end{amatrix} \\
+		\grstep[R_4 + \frac{1}{5}R_3]{\frac{2}{5}R_3}
+		\begin{amatrix}{5} 1 & 0 & 0 & -3/2 & 1/2 & 9/2 \\ 0 & 1 & 0 & -3/2 & -1/2 & 3/2 \\ 0 & 0 & 0 & 1 & -1 & -1 \\ 0 & 0 & 0 & 0 & 0 & 0 \end{amatrix}
+		\grstep[R_2 + \frac{3}{2}R_3]{R_1 + \frac{3}{2}R_3}
+		\begin{amatrix}{5} 1 & 0 & 0 & 0 & -1 & 3 \\ 0 & 1 & 0 & 0 & -2 & 0 \\ 0 & 0 & 0 & 1 & -1 & -1 \\ 0 & 0 & 0 & 0 & 0 & 0 \end{amatrix} \\
+		$
+		$$
+		\left\{\textbf{x}\in \mathbb{R}^5 : \textbf{x} = \lambda_1\colvec{0 \\ 0 \\ 1 \\ 0 \\ 0} + \lambda_2\colvec{1 \\ 2 \\ 0 \\ 1 \\ 1} + \colvec{3 \\ 0 \\ 0 \\ -1 \\ 0 },  \quad 												\lambda_1, \lambda_2 \in \mathbb{R} \right\}
+		$$
+	\end{enumerate}
+\clearpage
+
+\subsection*{Problem 4 (2.6)}
+	\textbf{A} = $\begin{bmatrix} 0 & 1 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 & 1 & 0 \\ 0 & 1 & 0 & 0 & 0 & 1 \end{bmatrix}$, $\vec{b} = \begin{bmatrix} 2 \\ -1 \\ 1 \end{bmatrix}$	\\
+	$
+	\longrightarrow \begin{amatrix}{6} 0 & 1 & 0 & 0 & 1 & 0 & 2 \\ 0 & 0 & 0 & 1 & 1 & 0 & -1 \\ 0 & 1 & 0 & 0 & 0 & 1 & 1 \end{amatrix}
+	\grstep{R_3 - R_1}
+	\begin{amatrix}{6} 0 & 1 & 0 & 0 & 1 & 0 & 2 \\ 0 & 0 & 0 & 1 & 1 & 0 & -1 \\ 0 & 0 & 0 & 0 & -1 & 1 & -1 \end{amatrix} \\
+	\grstep{-R_3}
+	\begin{amatrix}{6} 0 & 1 & 0 & 0 & 1 & 0 & 2 \\ 0 & 0 & 0 & 1 & 1 & 0 & -1 \\ 0 & 0 & 0 & 0 & 1 & -1 & 1 \end{amatrix}
+	\grstep[R_2 - R_3]{R_1 - R_3}
+	\begin{amatrix}{6} 0 & 1 & 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 0 & 1 & -2 \\ 0 & 0 & 0 & 0 & 1 & -1 & 1 \end{amatrix}
+	$
+	$$
+	\left\{\textbf{x}\in \mathbb{R}^6 : \textbf{x} = \lambda_1\colvec{1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 } + \lambda_2\colvec{0 \\ 0 \\ 1 \\ 0 \\ 0 \\ 0 } + \lambda_3 \colvec{0 \\ -1 \\ 0 \\ -1 \\ 1 \\ 1 								      } + \colvec{0 \\ 1 \\ 0 \\ -2 \\ 1 \\ 0 },  \quad \lambda_1,\lambda_2, \lambda_3 \in \mathbb{R} \right\}
+	$$
+\clearpage
+
+\subsection*{Problem 5 (2.7)}
+	\textbf{Ax} = 12\textbf{x} \\
+	\textbf{A} = $\begin{bmatrix} 6 & 4 & 3 \\  6 & 0 & 9 \\ 0 & 8 &  0\end{bmatrix}$, and $\sum_{i=1}^3 x_i = 1$ \\
+	$
+	[\textbf{A}-12\textbf{I}]\textbf{x} = 0 \Rightarrow
+	\begin{bmatrix} -6 & 4 & 3 \\  6 & -12 & 9 \\ 0 & 8 &  -12 \end{bmatrix} 
+	\grstep{R_2 + R_1}
+	\begin{bmatrix} -6 & 4 & 3 \\  0 & -8 & 12 \\ 0 & 8 &  -12 \end{bmatrix}\\
+	\grstep{R_3 + R_2} 
+	\begin{bmatrix} -6 & 4 & 3 \\  0 & -8 & 12 \\ 0 & 0 &  0 \end{bmatrix}
+	\grstep{R_1 + \frac{1}{2}R_2}
+	\begin{bmatrix} -6 & 0 & 9 \\  0 & -8 & 12 \\ 0 & 0 &  0 \end{bmatrix}
+	\grstep[-\frac{1}{4}R_2]{-\frac{1}{6}R_1}
+	\begin{bmatrix} 1 & 0 & -3/2 \\  0 & 1 & -3/2 \\ 0 & 0 &  0 \end{bmatrix}
+	$
+	From this system of equations, we get that: $x_1 = \frac{3}{2}x_3 = x_2$. However, we need to consider the other constraint that $x_1 + x_2 + x_3 = 1$. Substituting the values 		from the system into this constraint, we get: $\frac{3}{2}x_3 + \frac{3}{2}x_3 + x_3 = 1$, or $x_3 = \frac{1}{4}$. $\therefore \textbf{x} = \colvec{\frac{3}{8} \\ 
+	\frac{3}{8} \\ \frac{1}{4}}$
+
+\subsection*{Problem 6 (2.9)}
+	\begin{enumerate}[label=(\alph*)]
+		\item Yes.\textbf{A} = Span$\left\{\colvec{1\\1\\1}, \colvec{0\\1\\-1}\right\}$, which is closed under addition and scalar multiplication with a 0 vector, so it's a subspace.
+		\item Yes, for similar reasons as above but with one less column vector in the span.
+		\item No. Solutions of the possible inhomogenous systems are not subspaces of $\mathbb{R}^3 $ since they can be empty.
+		\item No. It is trivial to see that the set is not closed under scalar multiplication that would lead to fractions in $\xi_2$
+	\end{enumerate}
+\clearpage
+
+\subsection*{Problem 7 (2.10)}
+	\begin{enumerate}[label=(\alph*)]
+		\item $x_1 = \colvec{2 \\ -1 \\ 3} ,  x_2 = \colvec{1 \\ 1 \\ -2},  x_3 = \colvec{3 \\ -3 \\ 8} \\
+			\rightarrow \begin{bmatrix} 2 & 1 & 3 \\ -1 & 1 & -3 \\ 3 & -2 & 8 \end{bmatrix}
+			\grstep{-R_2 \leftrightarrow R_1}
+			\begin{bmatrix} 1 & -1 & 3 \\ 2 & -1 & 3 \\ 3 & -2 & 8 \end{bmatrix} \\
+			\grstep[R_3 - 3R_1]{R_2 - 2R_1}
+			\begin{bmatrix} 1 & -1 & 3 \\ 0 & 1 & -3 \\ 0 & 1 & -1 \end{bmatrix}
+			\grstep[R_3-R_2]{R_1+R_2}
+			\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & -3 \\ 0 & 0 & 2 \end{bmatrix}\\
+			\grstep[R_2+3R_3]{\frac{1}{2}R_3}
+			\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$ \\ There is a pivot in every column, so the vectors are linearly independent.
+		\item $x_1 =\colvec{1 \\ 2 \\ 1 \\ 0 \\ 0}, x_2 = \colvec{1 \\ 1 \\ 0 \\ 1 \\ 1}, x_3 =\colvec{1 \\ 0 \\ 0 \\ 1 \\ 1} \\
+			\rightarrow \begin{bmatrix} 1 & 1 & 1 \\ 2 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{bmatrix}
+			\grstep[R_3-R_1]{R_2-2R_1}
+			\begin{bmatrix} 1 & 1 & 1 \\ 0 & -1 & -2 \\ 0 & -1 & -1 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{bmatrix}
+			\grstep{-R_2}
+			\begin{bmatrix} 1 & 1 & 1 \\ 0 & 1 & 2 \\ 0 & -1 & -1 \\ 0 & 1 & 1 \\ 0 & 1 & 1 \end{bmatrix} \\
+			\grstep[R_4 - R_2, R_5 - R_2]{R_1-R_2, R_3 + R_2}
+			\begin{bmatrix} 1 & 0 & -1 \\ 0 & 1 & 2 \\ 0 & 0 & 1 \\ 0 & 0 & -1 \\ 0 & 0 & -1 \end{bmatrix}
+			\grstep[R_4 + R_3, R_5 + R_3]{R_1+R_3, R_2 - 2R_3}
+			\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} $ \\
+			There is a pivot in every column, so the vectors are linearly independent.
+	\end{enumerate}
+\clearpage
+
+%\subsection*{Problem 8 (2.11)}
+%	$
+%	\lambda_1 \colvec{1 \\ 1 \\ 1} + \lambda_2 \colvec{1 \\ 2 \\ 3} + \lambda_3 \colvec{2 \\  -1 \\ 1} = \colvec{1 \\ -2 \\ 5} \\
+%	\rightarrow \begin{amatrix}{3} 1 & 1 & 2 & 1 \\ 1 & 2  & -1 & -2 \\ 1 & 3 & 1 & 5 \end{amatrix}
+%	\grstep[R_3 - R_1]{R_2 - R_1}
+%	\begin{amatrix}{3} 1 & 1 & 2 & 1 \\ 0 & 1  & -3 & -3 \\ 0 & 2 & -1 & 4 \end{amatrix} \\
+%	\grstep[R_3 - 2R_2]{R_1 - R_2}
+%	\begin{amatrix}{3} 1 & 0 & 5 & 4 \\ 0 & 1  & -3 & -3 \\ 0 & 0 & 5 & 10 \end{amatrix}
+%	\grstep{\frac{1}{2}R_3}
+%	\begin{amatrix}{3} 1 & 0 & 5 & 4 \\ 0 & 1  & -3 & -3 \\ 0 & 0 & 1 & 2 \end{amatrix} \\
+%	\grstep[R_2 + 3R_3]{R_1 - 5R_3}
+%	\begin{amatrix}{3} 1 & 0 & 0 & -6 \\ 0 & 1  & 0 & 3 \\ 0 & 0 & 1 & 2 \end{amatrix} \\
+%	\therefore -6\mathbf{x_1} + 3\mathbf{x_2} + 2\mathbf{x_3} = \mathbf{y}
+%	$
+
+\end{document}

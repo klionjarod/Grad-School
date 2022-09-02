@@ -1,0 +1,7 @@
+,Layer Description,Number of Filters,Kernel_Size,Stride,Number of Parameters
+Layer 1,Conv2d,16,5,1,1216
+Layer 2,Conv2d 2x2 max pooling,16,5,1,6416
+Layer 3,Conv2d + 2x2 max pooling,32,5,1,12832
+Layer 4,Conv2d + ReLU activation,32,5,1,25632
+Layer 5,Linear,2048/1,,,2049
+Total Number of Parameters,48145,,,,

@@ -1,0 +1,8 @@
+ "propLabel" , "prop" ,
+ "http://www.w3.org/ns/shacl#property" , "http://yago-knowledge.org/value/shape-prop-schema-Place-schema-containedInPlace" ,
+ "http://www.w3.org/ns/shacl#property" , "http://yago-knowledge.org/value/shape-prop-schema-Place-schema-containsPlace" ,
+ "http://www.w3.org/ns/shacl#property" , "http://yago-knowledge.org/value/shape-prop-schema-Place-schema-elevation" ,
+ "http://www.w3.org/ns/shacl#property" , "http://yago-knowledge.org/value/shape-prop-schema-Place-schema-faxNumber" ,
+ "http://www.w3.org/ns/shacl#property" , "http://yago-knowledge.org/value/shape-prop-schema-Place-schema-geo" ,
+ "http://www.w3.org/ns/shacl#property" , "http://yago-knowledge.org/value/shape-prop-schema-Place-schema-logo" ,
+ "http://www.w3.org/ns/shacl#property" , "http://yago-knowledge.org/value/shape-prop-schema-Place-schema-telephone" ,
