@@ -1,0 +1,100 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm} %gives us the character \varnothing, and then lets us use \begin{proof}
+\usepackage{amssymb} 
+\usepackage{enumitem}
+\usepackage{siunitx}
+
+\title{Homework 2}
+\author{Jarod Klion}
+\date{October 21, 2022}
+
+\usepackage{fullpage}
+\newcommand\norm[1]{\lVert#1\rVert}
+\newcommand\abs[1]{\lvert#1\rvert}
+
+
+\begin{document}
+\maketitle
+
+%\setlength{\fboxsep}{2pt}\fbox{\rule{4cm}{3cm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{enumerate} 
+\item Following is often referred to as the equivalence of the norms. For any square matrix $A \in \mathbb{R}^{n \times n}$, prove the following relations:
+	\begin{enumerate}[label=(\alph*)]
+		\item $\frac{1}{n}K_2(A) \leq K_1(A) \leq nK_2(A)$ \\ 
+		\newline
+		We will start by proving some equivalences for vector norms using the Cauchy-Schwarz inequality and then translating it to matrix norms and subsequently condition numbers:
+		\begin{equation} \label{Cauchy}
+			\norm{x}_2^2 = \sum_{i=1}^{n} x_{i}^2 \leq (\sum_{i=1}^{n}|x_i|)(\sum_{i=1}^{n}|x_i|) = \norm{x}_{1}^2
+		\end{equation}
+		Proving an equivalence between the one- and two-norm:
+		\begin{align}
+			\norm{x}_1 &=  \sum_{i=1}^{n} \abs{x_i} * 1 \nonumber \\
+					&\leq \sqrt{\sum_{i=1}^{n} \abs{x_i}^2 * \sum_{i=1}^{n} 1^2} \nonumber \\ 
+					&\leq \left(\sum_{i=1}^{n} \abs{x_i}^2\right)^{1/2} \left(\sum_{i=1}^{n} \abs{1}^2\right)^{1/2} = \sqrt{n}\norm{x}_2 \nonumber \\
+			\label{vec2Norm}
+			\Rightarrow \norm{x}_1 &\leq \sqrt{n} \norm{x}_2
+		\end{align}
+		Proving equivalence between the one- and $\infty$-norm:
+		\begin{align}
+			\norm{x}_1 = \sum_{i=1}^n \abs{x_i} \leq \sum_{i=1}^n &\abs{\max_{j \leq n} x_j} \leq n \max_{1\leq j \leq n} x_j = n \norm{x}_{\infty} \nonumber \\
+			\label{vecInfNorm1}
+			\Rightarrow \frac{1}{n} \norm{x}_1 &\leq \norm{x}_{\infty}
+		\end{align}
+		Proving equivalence between the two- and $\infty$-norm:
+		\begin{align}
+			\label{vecInfNorm2}
+			\norm{x}_2 = \sum_{i=1}^n \abs{x_{i}}^2 &\geq \max_{i} \abs{x_i} = \norm{x}_\infty \nonumber \\
+			\norm{x}_\infty &\leq \norm{x}_2 \\
+			\norm{x}_2^2 = \sum_{i=1}^n \abs{x_{i}}^2 &\leq \mbox{n} \max_{i} \abs{x_i}^2 = n \norm{x}_\infty^2 \nonumber \\
+			\label{vecInfNorm3}
+			\norm{x}_2 &\leq \sqrt{n}\norm{x}_\infty
+		\end{align}
+
+		Putting together the norm equivalences we've shown so far, we can show the norm equivalence between $\norm{x}_1$ and $\norm{x}_{\infty}$ to be:
+		\begin{gather}
+			\frac{1}{n}\norm{x}_1 \leq \norm{x}_{\infty} \leq \norm{x}_2 \leq \norm{x}_1 \leq \sqrt{n}\norm{x}_2 \leq n\norm{x}_{1} \nonumber \\
+			\label{vecInfEquiv}
+			\frac{1}{n}\norm{x}_1 \leq \norm{x}_{\infty} \leq n \norm{x}_1
+		\end{gather}	
+
+		Now, some matrix norm equivalences using inequalities \ref{Cauchy} \& \ref{vec2Norm}:
+		\begin{align}
+		\norm{Ax}_2 \leq \norm{Ax}_1 &\leq \norm{A}_1\norm{x}_1 \leq \norm{A}_1 \sqrt{n} \norm{x}_2 \nonumber \\
+		\label{matLHSNorm}
+		\Rightarrow \frac{1}{\sqrt{n}}\norm{A}_2 &\leq \norm{A}_1 \\
+		\norm{Ax}_1 \leq \sqrt{n}\norm{Ax}_2 &\leq \sqrt{n}\norm{A}_2\norm{x}_2 \leq \sqrt{n} \norm{A}_2 \norm{x}_1 \nonumber \\
+		\label{matRHSNorm}
+		\Rightarrow \norm{A}_1 &\leq \sqrt{n} \norm{A}_2
+		\end{align}
+		
+		Since the condition number of a matrix is defined as $K(A) = \norm{A}\norm{A^{-1}}$, follow a similar process as above and multiply the norms to get the equivalence:
+		\begin{equation}
+			\frac{1}{n}K_2(A) \leq K_1(A) \leq nK_2(A)  \mbox{ QED}
+		\end{equation}
+
+		\item $\frac{1}{n^2}K_1(A) \leq K_{\inf}(A) \leq n^2K_1(A)$ \\
+		\newline
+		 
+		Translating inequality \ref{vecInfEquiv} into matrix norms and the subsequent condition numbers, we can see that we arrive at the desired expression:
+		\begin{equation}
+			\frac{1}{n^2}K_1(A) \leq K_{\infty}(A) \leq n^2K_1(A)
+		\end{equation}
+	\end{enumerate}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Let $A$ be a sparse matrix of order $n$. Prove that the computational cost of the LU factorization of A is given by,
+	\begin{equation*}
+		\frac{1}{2} \sum_{k=1}^{n} l_k (A)(l_k(A) + 3) \mbox{ flops} ,
+	\end{equation*}
+	where $l_k(A)$ is the number of active rows at the $k$-th step of the factorization (i.e, the number of rows of $A$ with $i > k$ and $a_{ik} \neq 0$, and having accounted for all nonzero entries.
+\end{enumerate}
+\clearpage %Gives us a page break before the next section. Optional.
+\end{document}

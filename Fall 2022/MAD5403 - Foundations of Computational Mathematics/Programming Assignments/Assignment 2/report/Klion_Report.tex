@@ -1,0 +1,153 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+% Math packages.
+\usepackage{amsmath,amssymb,amstext,amsfonts}
+% Add figures.
+\usepackage{graphicx}
+%needed for table stuff
+\usepackage{multirow}
+
+% Metadata
+\author{Jarod Klion}
+\title{LU Factorization and Pivoting Methods}
+
+\newcommand{\norm}[1]{\lVert#1\rVert}
+
+\begin{document}
+
+\maketitle
+
+\section{Executive Summary}
+
+In this report, we consider the solution $x$ of the matrix equation $Ax = b$ using LU factorization of the square matrix using one of three possible methods: 1.) no pivoting, 2.) partial pivoting, or 3.) complete pivoting such that $A = LU$, $PA = LU$, or $PAQ = LU$, respectively. Correctness of the analytic derivations is evaluated by accuracy calculations using the computed values. Results are obtained and discussed for partial and complete pivoting of a randomly generated matrix, a symmetric positive definite matrix, and the given linear system: $A_{test} = \begin{bmatrix} 2 & 1 & 0 \\ -4 & 0 & 4 \\ 2 & 5 & 10  \end{bmatrix}$, and $b_{test} = \begin{bmatrix} 3 \\ 0 \\ 17 \end{bmatrix}$.
+
+\section{Statement of the Problem}
+
+The numerical solution to the linear system $Ax = b$ is important in nearly all scientific- and mathematical-computing applications as matrices exist and are used everywhere. LU factorization methods can be used to solve the linear system more efficiently using forward and backward substitution, and the accuracy of the factorization should be the same as if the system was solved directly. We analyze the accuracy of the factorization, the solution, and the residual, respectively:
+\begin{itemize}
+	\item Factorization Accuracy = $\frac{\norm{PAQ - LU}}{\norm{A}}$
+	\item Solution Accuracy = $\frac{\norm{x - \tilde{x}}}{\norm{x}}$
+	\item Residual Accuracy = $\frac{\norm{b - A\tilde{x}}}{\norm{b}}$
+\end{itemize} 
+
+\section{Description of the Algorithms and Implementation}
+
+The LU factorization methods each are translated directly into respective functions in \textbf{Python}, which accept two arguments: (1) an $n\times n$ matrix, A and (2) the pivoting method to use. For example, if a matrix, \textbf{A}, is previously defined, then \textbf{LUFactorization(A, 'partial')} returns the LU factorization of \textbf{A} using partial pivoting in the same input matrix as well as the pivoting vector \textbf{P}. Additionally, there is a solver method to determine the solution \textbf{x}, which can accept up to six arguments depending on the pivoting method used: (1) the input matrix containing L and U, (2) a vector, $b$, (3) a string value for the orientation method, $ori$, (4)  a string value for the pivoting method, $pivot$, (5) the row pivoting vector, $P$, and (6) the column pivoting vector, $Q$.
+
+\section{Description of the Experimental Design and Results}
+
+For each given matrix and LU factorization method, the accuracies of the factorization, solution, and residual are calculated directly by the formulas given in section 2. This leads us to six accuracy values for each matrix as we calculate the accuracies for two different norm types: $\ell_1$ and $\ell_2$ vector norms and $\ell_1$ and $F$ matrix norms. These results can be seen in Tables  \ref{tab:sym10}, \ref{tab:sym100}, \ref{tab:rand10}, \ref{tab:rand100}, and \ref{tab:test}.
+
+In Tables \ref{tab:sym10}, \ref{tab:sym100}, \ref{tab:rand10}, and \ref{tab:rand100}, the partial pivoting accuracy results all give relative errors basically equal to zero. However, when the accuracies are calculated for the complete pivoting results, only the factorization results yield very high accuracy. The solution and residual accuracies, on the other hand, are quite low, which shows that there probably exists an issue in the implemented solver routine for complete pivoting as those accuracies depend upon the computed x, $\tilde{x}$. Unlike the results for the other matrices, the accuracies of the test matrix, shown in Table \ref{tab:test}, are all extremely high regardless of the pivoting method used in the LU factorization.  
+
+Additionally, the actual LU factorization and pivoting matrices achieved for this test matrix are shown below: \\
+Partial Pivoting LU Factorization Results: \\
+Matrix$_p = \begin{bmatrix} -4 & 0 & 4 \\
+				    -\frac{1}{2} & 5 & 12 \\
+				    \frac{1}{2} & \frac{1}{5} & -\frac{2}{5}
+		 \end{bmatrix}$,
+$p = \begin{bmatrix} 1 & 2 & 0 \end{bmatrix}$,
+$x_p = \begin{bmatrix} 1 \\ 1 \\ 1  \end{bmatrix}$ \\
+
+Complete Pivoting LU Factorization Results: \\
+Matrix$_c = \begin{bmatrix} 10 & 2 & 5 \\
+				    \frac{2}{5} & -\frac{24}{5} & -2 \\
+				    0& -\frac{5}{12} & \frac{1}{6}
+		 \end{bmatrix}$,
+$p = \begin{bmatrix} 2 & 1 & 0 \end{bmatrix}$,
+$q = \begin{bmatrix} 2 & 0 & 1 \end{bmatrix}$,
+$x_c = \begin{bmatrix} 1 \\ 1 \\ 1  \end{bmatrix}$
+
+
+\section{Conclusions}
+
+Despite what appears to be faulty results for the solution and residual accuracy for the generated matrices, the results illustrate the accuracy of LU factorization in determining solutions of a given linear system. It can probably be found that the bad accuracy measures for those matrices are due to an issue in how the complete pivoting is handled for both purely randomly generated matrices and symmetric positive definite matrices. This raises the question of why the accuracy values for the provided test matrix are all near perfect accuracy while the accuracy results for the random and symmetric matrices are much lower. One possible explanation for this discrepancy is that the two sizes of the non-test matrices leads to a propagation of errors, resulting in the massive error values seen in the tables which could be explored further.
+
+\section{Tables}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	\textbf{Symmetric 10x10 A}                    &          		& \textbf{Partial} & \textbf{Complete} \\ \hline
+	\multirow{2}{*}{\textbf{Factorization}} &  $\norm{\cdot}_1$ & 7.077e-17        & 9.18e-17          \\ \cline{2-4} 
+	                                        			 & $\norm{\cdot}_F$ & 6.61e-17         & 6.78e-17          \\ \hline
+	\multirow{2}{*}{\textbf{Solution}}         &  $\norm{\cdot}_1$ & 2.13e-16         & 0.7666            \\ \cline{2-4} 
+	                                        			 &  $\norm{\cdot}_2$ & 2.16e-16         & 0.8068            \\ \hline
+	\multirow{2}{*}{\textbf{Residual}}        &  $\norm{\cdot}_1$ & 9.14e-17         & 1.1195            \\ \cline{2-4} 
+	                                        			 &  $\norm{\cdot}_2$ & 9.14e-17         & 0.4074            \\ \hline
+	\end{tabular}
+	\caption{Different accuracy values for the linear system Ax=b with a 10x10 symmetric positive-definite matrix and random x solved using either partial (column 3) or complete (column 4) pivoting.}
+	\label{tab:sym10}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	\textbf{Symmetric 100x100 A}           &         	    & \textbf{Partial} & \textbf{Complete} \\ \hline
+	\multirow{2}{*}{\textbf{Factorization}} 	& $\norm{\cdot}_1$ & 2.77e-16         & 1.96e-16          \\ \cline{2-4} 
+				                                           & $\norm{\cdot}_F$ & 2.51e-16         & 1.69e-16          \\ \hline
+	\multirow{2}{*}{\textbf{Solution}}      		& $\norm{\cdot}_1$ & 7.18e-15         & 0.6164            \\ \cline{2-4} 
+				                                           & $\norm{\cdot}_2$ & 8.09e-15         & 0.6596            \\ \hline
+	\multirow{2}{*}{\textbf{Residual}}      		& $\norm{\cdot}_1$ & 9.21e-16         & 0.2095            \\ \cline{2-4} 
+	                                  			           & $\norm{\cdot}_2$ & 1.60e-16         & 0.0250            \\ \hline
+	\end{tabular}
+	\caption{Different accuracy values for the linear system Ax=b with a 100x100 symmetric positive-definite matrix and random x solved using either partial (column 3) or complete (column 4) pivoting.}
+	\label{tab:sym100}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	\textbf{Random 10x10 A}                 &                  			& \textbf{Partial} & \textbf{Complete} \\ \hline
+	\multirow{2}{*}{\textbf{Factorization}} 		& $\norm{\cdot}_1$ & 8.74e-17         & 7.53e-17          \\ \cline{2-4} 
+				    	                                           & $\norm{\cdot}_F$ & 7.98e-17         & 5.99e-17          \\ \hline
+	\multirow{2}{*}{\textbf{Solution}}      			& $\norm{\cdot}_1$ & 5.02e-16         & 0.3333            \\ \cline{2-4} 
+	                                        					& $\norm{\cdot}_2$ & 5.73e-16         & 0.4592            \\ \hline
+	\multirow{2}{*}{\textbf{Residual}}      			& $\norm{\cdot}_1$ & 1.40e-16         & 0.2424            \\ \cline{2-4} 
+	                                        					& $\norm{\cdot}_2$ & 8.59e-17         & 0.1077            \\ \hline
+	\end{tabular}
+	\caption{Different accuracy values for the linear system Ax=b with a 10x10 randomly-generated matrix and random x solved using either partial (column 3) or complete (column 4) pivoting.}
+	\label{tab:rand10}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	\textbf{Random 100x100 A}               &                  	& \textbf{Partial} & \textbf{Complete} \\ \hline
+	\multirow{2}{*}{\textbf{Factorization}} 		& $\norm{\cdot}_1$ & 2.94e-16         & 2.62e-16          \\ \cline{2-4} 
+				  	                                          	& $\norm{\cdot}_F$ & 2.40e-16         & 2.54e-16          \\ \hline
+	\multirow{2}{*}{\textbf{Solution}}      			& $\norm{\cdot}_1$ & 7.65e-14         & 0.6161            \\ \cline{2-4} 
+	                                        					& $\norm{\cdot}_2$ & 9.55e-14         & 0.6579            \\ \hline
+	\multirow{2}{*}{\textbf{Residual}}      			& $\norm{\cdot}_1$ & 1.37e-15         & 0.1165            \\ \cline{2-4} 
+	                                        					& $\norm{\cdot}_2$ & 1.98e-16         & 0.0133            \\ \hline
+	\end{tabular}
+	\caption{Different accuracy values for the linear system Ax=b with a 100x100 randomly-generated matrix and random x solved using either partial (column 3) or complete (column 4) pivoting.}
+	\label{tab:rand100}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	\textbf{Test A}                         &                  			& \textbf{Partial} & \textbf{Complete} \\ \hline
+	\multirow{2}{*}{\textbf{Factorization}} 	& $\norm{\cdot}_1$ & 0.0              & 0.0               \\ \cline{2-4} 
+	                                        				& $\norm{\cdot}_F$ & 0.0              & 0.0               \\ \hline
+	\multirow{2}{*}{\textbf{Solution}}      		& $\norm{\cdot}_1$ & 0.0              & 2.15e-15          \\ \cline{2-4} 
+	                                        				& $\norm{\cdot}_2$ & 0.0              & 2.31e-15          \\ \hline
+	\multirow{2}{*}{\textbf{Residual}}      		& $\norm{\cdot}_1$ & 0.0              & 2.52e-15          \\ \cline{2-4} 
+	                                        				& $\norm{\cdot}_2$ & 0.0              & 1.60e-15          \\ \hline
+	\end{tabular}
+	\caption{Different accuracy values for the linear system Ax=b with the given test matrix and b solved using either partial (column 3) or complete (column 4) pivoting.}
+	\label{tab:test}
+\end{table}
+
+
+
+\end{document}

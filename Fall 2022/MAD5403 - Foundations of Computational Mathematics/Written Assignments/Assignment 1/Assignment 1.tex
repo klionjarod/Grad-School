@@ -1,0 +1,142 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm} %gives us the character \varnothing, and then lets us use \begin{proof}
+\usepackage{amssymb} 
+\usepackage{enumitem}
+\usepackage{siunitx}
+
+\title{Homework 1}
+\author{Jarod Klion}
+\date{September 22, 2022}
+
+\usepackage{fullpage}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+\begin{document}
+\maketitle
+
+%\setlength{\fboxsep}{2pt}\fbox{\rule{4cm}{3cm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{enumerate} 
+\item Derive the relative and absolute condition number of a function at the point \emph{x}. Based on our notation from the class, note that the change of data $\delta d$ is equivalent to the change in the function value, i.e $f(x)$. In particular, let's assume we perturb $x$ by $h > 0$, where $\delta d = f(x + h) - f(x)$.
+	\begin{enumerate}[label=(\alph*)]
+		\item Show that $K_{rel} (x) = \bigg | \frac{xf'(x)}{f(x)} \bigg |$:
+			\begin{align*}
+				K_{rel}(d) &= \mbox{sup} \left( \frac{\norm{\delta x} / \norm{x}}{\norm{\delta d} / \norm{d}} \right) \mbox{, substitute in the givens to get} \\
+				K_{rel}(x) &= \left( \frac{\norm{f(x+h) - f(x)} / \norm{f(x)}}{\norm{h} / \norm{x}} \right)  \\
+				K_{rel}(x) &= \left( \frac{\norm{x}}{\norm{f(x)}}\frac{\norm{f(x+h) - f(x)}}{\norm{h}} \right) \\ 
+				&\mbox{and use the 1st-order Taylor expansion for $h \rightarrow 0$ to get}\\ 
+				K_{rel}(x) &= \bigg \lvert \frac{xf'(x)}{f(x)} \bigg \rvert \numberthis QED
+			\end{align*}
+		\item Find $K_{abs}(x)$
+			\begin{align*}
+				K_{abs}(d) &= \mbox{sup} \left(\frac{\norm{\delta x}}{\norm{\delta d}} \right) \mbox{, substitute in the givens to get}\\
+				K_{abs}(x) &= \mbox{sup} \left(\frac{\norm{f(x+h) - f(x)}}{\norm{h}} \right) \mbox{, using 1st order Taylor expansion of $f$ yields} \\
+				K_{abs}(x) &= \norm{f'(x)} \numberthis
+			\end{align*}
+		\item In particular, let's consider the function
+			\begin{equation*}
+				f(x) = \frac{\beta + x}{\beta - x}
+			\end{equation*}
+			Find the relative and absolute condition number for evaluating $f(x)$ by using (a)-(b). Then, compute the condition numbers around $x = 1$ and $x = 100$ when $\beta = 1.01$. Discuss your results.
+			\begin{itemize}
+				\item Start with the derivative of the function for further calculations: $ f'(x) = \frac{2\beta}{(\beta - x)^2} $, then
+				\begin{align}
+					K_{rel}(x) &= \bigg| \frac{2\beta x/(\beta-x)^2}{(\beta + x)/(\beta - x)} \bigg| = 2\bigg| \frac{\beta x}{x^2 - \beta^2} \bigg| \\
+					K_{rel}(x=1, \beta=1.01) &= 100.498 \qquad K_{rel}(x=0.99, \beta=1.01) = 49.995 \nonumber \\
+					K_{rel}(x = 100, \beta = 1.01) &= 0.0202021 \qquad K_{rel}(x = 99.99, \beta = 1.01) = 0.0202041  \nonumber \\
+					K_{abs}(x) &= \bigg| \frac{2\beta}{(\beta - x)^2} \bigg| = \frac{2|\beta|}{(x-\beta)^2} \\
+					K_{abs}(x = 1, \beta=1.01) &= 20200 \qquad K_{abs}(x = 0.99, \beta=1.01) = 5050 \nonumber \\
+					K_{abs}(x = 100, \beta=1.01) &= 20200 \qquad K_{abs}(x = 99.99, \beta=1.01) = 0.000206185 \nonumber
+				\end{align}
+				It appears that as $x$ changed by a small amount from 1, both the relative and absolute condition numbers changed drastically, showing that the problem is ill conditioned for small $x$. However, for the case of $x$ near 100, the problem is well conditioned as the condition numbers are low and change very little for small perturbations of $x$.
+			\end{itemize}
+	\end{enumerate}
+	\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider the roots of the following quadratic equation with the single parameter $\beta > 1$
+	\begin{equation*}
+		p(x) = x^2 + 2\beta x + 1 = 0
+	\end{equation*}
+	We can define the vector-valued function that maps $\beta$ to the two roots $x_{+}(\beta)$ and $x_{-}(\beta)$
+	\begin{equation*}
+		G : \mathbb{R} \rightarrow \mathbb{R}^2, \beta \mapsto \begin{bmatrix} x_{+}(\beta) \\ x_{-}(\beta)  \end{bmatrix} = \begin{bmatrix} -\beta + \sqrt{\beta^2 - 1} \\ -\beta -\sqrt{\beta^2 -1}\end{bmatrix}
+	\end{equation*}
+	\begin{enumerate}[label=(\alph*)]
+		\item What happens to the roots as $\beta \rightarrow \infty$, please describe with full details.
+			\begin{align}
+				\lim_{\beta \rightarrow \infty} G(\beta) = \begin{bmatrix} 0 \\ -\infty \end{bmatrix}
+			\end{align}
+			(5) shows the positive root vanishes as $\beta \to \infty$ while the negative root increases negatively forever.
+		\item For $\beta > 1$, consider the derivatives with respect to $\beta$ of each of the roots and derive and approximate the relative condition number for the vector of roots $G(\beta)$ when $\beta$ is perturbed slightly.
+			\begin{align}
+				G'(\beta) &= \begin{bmatrix} \frac{\beta}{\sqrt{\beta^2-1}} - 1 \\ -\frac{\beta}{\sqrt{\beta^2-1}} - 1 \end{bmatrix} \\ 
+				\norm{G'(\beta)} &= \sqrt{\frac{4\beta^2-2}{\beta^2-1}} \\
+				\norm{G(\beta)} &= \sqrt{4\beta^2-2}\\
+				&\mbox{Plugging (7) and (8) into equations (1) and (2), we get } \nonumber \\
+				K_{rel}(\beta) &= \norm{G'}\frac{\norm{\beta}}{\norm{G}}  = \frac{|\beta|}{\sqrt{\beta^2 - 1}} \mbox{, for $\beta > 1$}
+			\end{align}
+		\item Analyze and discuss. What is the relative condition number when $\beta$ is away from 1? What is the relative condition number when $\beta \rightarrow \infty$ and how does this relate to (a)? What is the relative condition number if $\beta$ approaches one, and why do we observe this?
+			\begin{align}
+				K_{rel}(\beta = 10) = 1.00504 &\qquad K_{rel}(\beta = 100) = 1.00005 \nonumber \\
+				\lim_{\beta \to \infty}&K_{rel}(\beta) = 1 \\
+				\lim_{\beta \to 1}&K_{rel}(\beta) = \infty
+			\end{align}
+			To start, (10) relates to (a) by showing that our problem is well conditioned for large $\beta$. We observe (11) because the problem is ill conditioned if $|\beta|$ is very close to 1 which we observe because $G'(\beta)$ does not exist for $\beta=1$.
+	\end{enumerate}
+	\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider the floating point system with $\beta = 10$ and $t = 3$. The associated floating point arithmetic is
+	\begin{equation*}
+		x\, \boxed{*}\, y = fl(x * y)
+	\end{equation*}
+	Let $x$ and $y$ be two floating point numbers with $x < y$ and consider computing their average $\alpha = (x+y)/2$ by utilizing the following three algorithms:
+	\begin{itemize}
+		\item $\alpha_{1} = ((x+y)/2.0)$
+		\item $\alpha_{2} = ((x/2.0) + (y/2.0))$
+		\item $\alpha_{3} = (x + ((y-x)/2.0))$
+	\end{itemize}
+	Note that the parentheses indicate the order of the floating point operations. Here, let $x = 5.01$ and $y=5.02$. First evaluate $\alpha_{1}, \alpha_{2}, \alpha_{3}$ in the specified floating point system. Then, explain and discuss the results.
+	\begin{itemize}
+		\item $\alpha_{1} = \frac{(5.01+5.02)}{2.00} = \frac{10.03}{2.00} = \frac{1.00e1}{2.00} = 5.00$
+		\item $\alpha_{2} = \frac{5.01}{2.00} + \frac{5.02}{2.00} = 2.505 + 2.51 = 2.51 + 2.51 = 5.02$
+		\item $\alpha_{3} = 5.01 + \left(\frac{(5.02 - 5.01)}{2.00}\right) = 5.01 + 0.005 = 5.015$
+	\end{itemize}
+	We can see that the first two algorithms suffer from rounding errors in the middle of the calculations, leading to more error on the solution while the last algorithm does not suffer that same rounding issue becase finding the midpoint of the two floating point numbers is still within the designated precision, so it isn't rounded before performing further calculations.
+	\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item (Preliminaries) First, prove that $\norm{\cdot}_2$ is a vector norm, then show $\norm{\vec{x} + \vec{y}}_2 \leq \norm{\vec{x}}_2 + \norm{\vec{y}}_2$ for any vectors $\vec{x}$ and $\vec{y}$. \\
+	Need to check if the conditions for a norm are met first, where $\norm{\cdot}_2 : V \rightarrow \mathbb{R}$   $\forall \vec{x},\vec{y} \in V$:
+	\begin{itemize}
+		\item \textbf{Non-negativity:} $\norm{\vec{x}}_2 \geq 0$ \\
+							Trivial to prove for $\vec{x} = 0$. Check $\vec{x} \neq 0$ case in which at least one component, $x_j$, is nonzero: \\
+							$\norm{\vec{x}}_2 = \sqrt{\abs{x_1}^2 + \abs{x_2}^2 + \ldots + \abs{x_n}^2} = \sqrt{\abs{x_j}^2} = \abs{x_j} \geq 0 $
+		\item \textbf{Homogeneity:} $\norm{a\vec{x}}_2 = \norm{a} \norm{\vec{x}}_2$ \\
+							$\norm{a\vec{x}} = \sqrt{\abs{ax_1}^2 + \abs{ax_2}^2 + \ldots + \abs{ax_n}^2} = \sqrt{\abs{a}^2\abs{x_1}^2 + \ldots + \abs{a}									^2\abs{x_n}^2}$ = $\sqrt{\abs{a}^2(\abs{x_1}^2 + \ldots + \abs{x_n}^2)}$ \\
+							$\abs{a}\sqrt{\abs{x_1}^2 + \ldots + \abs{x_n}^2} = \abs{a}\norm{\vec{x}}_2$
+		\item \textbf{Triangle Inequality:} $\norm{\vec{x} + \vec{y}}_2 \leq \norm{\vec{x}}_2 + \norm{\vec{y}}_2$ \\
+							 Assume Cauchy-Schwarz inequality $\abs{\langle x,y \rangle} \leq \norm{x}\norm{y}$, then consider $\norm{x + y}_2^2$: \\
+							\begin{align*}
+						 	\norm{\vec{x} + \vec{y}}_2^2 &= (\vec{x}+ \vec{y})(\vec{x}+ \vec{y}) \\
+											     &= \norm{\vec{x}}^2 + 2(\vec{x} \cdot \vec{y}) + \norm{\vec{y}}^2 \\	
+				       							     &\leq \norm{\vec{x}}^2 + 2\norm{\vec{x}}\norm{\vec{y}} + \norm{\vec{y}}^2 \\
+											     &= \left(\norm{\vec{x}}_2 + \norm{\vec{y}}_2\right)^2 \\
+							\Rightarrow \norm{\vec{x} + \vec{y}}_2  &=  \norm{\vec{x}}_2 + \norm{\vec{y}}_2
+							\end{align*}
+	\end{itemize}
+\end{enumerate}
+\clearpage %Gives us a page break before the next section. Optional.
+\end{document}

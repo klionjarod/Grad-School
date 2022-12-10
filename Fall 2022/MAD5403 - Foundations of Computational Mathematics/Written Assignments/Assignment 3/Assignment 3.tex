@@ -1,0 +1,107 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm} %gives us the character \varnothing, and then lets us use \begin{proof}
+\usepackage{amssymb} 
+\usepackage{enumitem}
+\usepackage{siunitx}
+
+\title{Homework 3}
+\author{Jarod Klion}
+\date{November 18th, 2022}
+
+\usepackage{fullpage}
+\newcommand\norm[1]{\lVert#1\rVert}
+\newcommand\abs[1]{\lvert#1\rvert}
+
+
+\begin{document}
+\maketitle
+
+%\setlength{\fboxsep}{2pt}\fbox{\rule{4cm}{3cm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{enumerate} 
+\item Consider the system of equations $Ax = b$, where $A$ is a nonsingular lower triangular matrix, i.e 
+	$$A = D - L,$$ 
+	where $D$ is diagonal and nonsingular, and $L$ is strictly lower triangular matrix.
+	\begin{enumerate}[label=(\alph*)]
+		\item Show that (forward) Gauss-Seidel will converge to $x = A^{-1}b$ in a finite number of steps (in exact arithmetic) for any initial guess $x_0$ and give a tight upper bound on the number of steps required.
+		\begin{itemize}
+			\item In Gauss-Seidel, $x^{k+1} = (D - E)^{-1}Fx^k + (D-E)^{-1}b$. In matrix form, $A = D - (E + F)$ and since A is a nonsingular lower triangular matrix, $F$ is the zero matrix. In this problem, $E = L$, leaving us immediately with $x = (D-L)^{-1}b =  A^{-1}b$ in one step for any $x_0$.
+		\end{itemize}
+		\item Also, could you show the same results for the (backward) Gauss-Seidel?
+		\begin{itemize}
+			\item Now, Backward Gauss-Seidel takes the form $x^{k+1} =(D-F)^{-1}Ex^k + (D-F)^{-1}b$. As before, $E=L$ and $F=0$, leaving us with $x^{k+1} = D^{-1}Lx^k + D^{-1}b$. There does not appear to be any further substitutions that would lead to meaningful simplifications, leaving us with a form much different than for the forward Gauss-Seidel.
+		\end{itemize}
+	\end{enumerate}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item When attempting to solve $Ax = b$ where $A$ is known to be nonsingular via an iterative method, we have seen various theorems that give sufficient conditions on $A$ to guarantee the convergence of various iterative methods. It is not always easy to verify these conditions for a given matrix $A$. Let $P$ and $Q$ be two permutation matrices. Rather than solving $Ax = b$, we could solve,
+	$$ (PAQ)(Q^{T}x) = Pb $$
+	using an iterative method. Sometimes it is possible to examine $A$ and choose $P$ and(or) $Q$ so that it is easy to apply one of our sufficient condition theorems. The Gauss-Seidel and Jacobi iterative methods did not converge for linear systems with the matrix
+	$$A =
+	\begin{bmatrix} 
+	3 & 7 & -1 \\
+	7 & 4 & 1 \\
+	-1 & 1 & 2
+	\end{bmatrix}
+	$$
+	Why? Can you choose $P$ and $Q$ that the permuted system converges for one or both of Gauss-Seidel and Jacobi?
+	\begin{itemize}
+		\item In the non-permuted state, neither Gauss-Seidel or Jacobi converge because the spectral radius of their respective iteration matrix is greater than 1. There are several $P$ and $Q$ that can be chosen to permute the system such that it converges for one or both of Gauss-Seidel and Jacobi. We will apply the theorem that states that both these iterative methods converge iff $A$ is a strictly diagonally dominant matrix by rows. For example, if we take 
+	$$ P = \begin{bmatrix} 
+		 0 & 1 & 0 \\ 
+		 0 & 0 & 1 \\
+		 1 & 0 & 0 \end{bmatrix} 
+	\mbox{ and }
+	Q = \begin{bmatrix} 
+		 1 & 0 & 0 \\
+		 0 & 0 & 1 \\
+		 0 & 1 & 0 \end{bmatrix}, $$
+	we end up with this permutated system and associated spectral radii for Jacobi and Gauss-Seidel, respectively:
+	$$ PAQ = \begin{bmatrix} 
+		 7 & 1 & 4 \\ 
+		 -1 & 2 & 1 \\
+		 3 & -1 & 7 \end{bmatrix}, $$
+	$$\rho(B_J) \approx 0.496,$$
+	$$\rho(B_{GS}) \approx 0.175$$
+	Since both $\rho(B_J)$ and $\rho(B_{GS})$ are less than 1, Jacobi and Gauss-Seidel are guaranteed to converge.
+	\end{itemize}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item When solving $Ax = b$ or equivalently the associated quadratic definite minimization problem using Conjugate Gradient, we have
+	$$ x_{k+1} = x_0 + \alpha_0p_0 + \cdots + \alpha_kp_k,$$
+	where the $p_j$ are $A-$orthogonal vectors. It can be shown that
+	$$ \mbox{span}(p_0, ..., p_k) = \mbox{span}(r_0, Ar_0, ..., A^kr_0)$$
+	where $r_0 = b - Ax_0$ and $x_0$ is the initial guess for the solution $x^{*} = A^{-1}b$. Therefore,
+	$$ x_{k+1} = x_0 + \gamma_0r_0 + \gamma_1Ar_0 + \cdots + \gamma_kA^kr_0 = x_0 - P_k(A)r_0$$
+	where $P_k(A) = \gamma_0I + \gamma_1A + \cdots + \gamma_kA^k$ is a matrix that is called a matrix polynomial evaluated at $A$. (A space whose span can be defined by a matrix polynomial is called a Krylov space). denote $d_j = A^jr_0$ for $j = 0, 1, ...,$ and determine the relationship between the coefficients $\alpha_0, \ldots, \alpha_k,$ and the coefficients $\gamma_0, \ldots, \gamma_k$.
+	\begin{itemize}
+		\item To determine the relationship between the coefficients, we will compare the equations on each side:
+		$$ x_0 + \alpha_0p_0 + \cdots + \alpha_kp_k = x_0 + \gamma_0r_0 + \gamma_1Ar_0 + \cdot + \gamma_kA^kr_0.$$
+		Letting $d_j = A^jr_0$ and simplifying, we get a relation between the coefficients:
+		$$ \alpha_0p_0 + \cdots + \alpha_kp_k = \gamma_0d_0 + \gamma_1d_1 + \cdots + \gamma_kd_k $$
+		$$ \sum_{j=0}^k \alpha_jp_j = \sum_{j=0}^k \gamma_jd_j $$
+		$$ \alpha_n = \gamma_n \frac{d_n}{p_n}$$
+	\end{itemize}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Determine the necessary and sufficient conditions for $x = A^{-1}b$ to be a fixed point of 
+	$$ x_{k+1} = Gx_k + f$$
+	\begin{itemize}
+		\item Letting $\phi(x) = Gx + f$, we can determine the conditions required for a fixed point to exist. $\phi(x)$ must be a continuous function on a given interval $[a, b]$ and $\phi(x) \in [a, b] ~\forall x \in [a, b]$ by the theorem presented in class.
+	\end{itemize}
+\end{enumerate}
+\clearpage %Gives us a page break before the next section. Optional.
+\end{document}
